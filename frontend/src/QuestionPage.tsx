@@ -1,10 +1,13 @@
 import { useParams } from "react-router";
 import { useNavigate } from "react-router-dom";
+import questions from "./questions.json";
 
 // Question Page
 const QuestionPage: React.FC = () => {
     const { questionId } = useParams<{ questionId: string }>();
     const navigate = useNavigate();
+
+    const question = questionId ? questions.find(q => q.id === parseInt(questionId)) : undefined;
   
     const markAsFinished = () => {
       // Get existing finished questions from local storage
@@ -13,7 +16,9 @@ const QuestionPage: React.FC = () => {
   
       // Add the current question to the finished list and save to local storage
       if (questionId) {
-        finishedQuestions.push(parseInt(questionId));
+        if (questionId) {
+            finishedQuestions.push(parseInt(questionId));
+        }
       }
       localStorage.setItem('finishedQuestions', JSON.stringify(finishedQuestions));
   
@@ -24,7 +29,7 @@ const QuestionPage: React.FC = () => {
     return (
       <div>
         <h1>Question {questionId}</h1>
-        <p>This is the content of question {questionId}.</p>
+        <p>{question ? question.content : 'Question not found.'}</p>
         <button onClick={markAsFinished}>Mark as Finished</button>
       </div>
     );
