@@ -14,7 +14,7 @@ const HomePage: React.FC = () => {
     const questions = [1, 2, 3, 4, 5, 6, 7];
   
     return (
-      <div>
+      <div className="flex">
         <h1>Q&A Website</h1>
         <ul>
           {questions.map((question) => (
